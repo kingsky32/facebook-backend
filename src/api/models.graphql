@@ -10,7 +10,9 @@ type User {
   isFrind: Boolean!
   isSelf: Boolean!
   bio: String
-  frinds: [User!]!
+  isFriend: Boolean!
+  friends: [User!]!
+  friendsCount: Int!
   posts: [Post!]!
   postsCount: Int!
   likes: [Like!]!
