@@ -2,10 +2,10 @@ type User {
   id: ID! @id
   avatar: String
     @default(
-      value: "https://instagram.fsaw2-2.fna.fbcdn.net/v/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fsaw2-2.fna.fbcdn.net&_nc_ohc=k9G3x77cGJoAX9b-R4t&oh=8ab87cafff6ae9827eda1084e24d0391&oe=5F37450F&ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.2"
+      value: "https://scontent-ssn1-1.xx.fbcdn.net/v/t1.30497-1/cp0/c22.0.74.74a/p74x74/84241059_189132118950875_4138507100605120512_n.jpg?_nc_cat=1&_nc_sid=7206a8&_nc_ohc=dw1sHrpyaGsAX-k0D5r&_nc_ht=scontent-ssn1-1.xx&oh=25f0adbdc01a7f5a302bd08b29736be6&oe=5F7CC668"
     )
-  username: String! @unique
   email: String! @unique
+  username: String!
   password: String!
   firstName: String @default(value: "")
   lastName: String
