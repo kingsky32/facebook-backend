@@ -5,15 +5,15 @@ export default {
     seeFeed: async (_, __, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { user } = request;
-      const following = await prisma
+      const friends = await prisma
         .user({
           id: user.id
         })
-        .following();
+        .friends();
       return prisma.posts({
         where: {
           user: {
-            id_in: [...following.map(user => user.id), user.id]
+            id_in: [...friends.map(user => user.id), user.id]
           }
         },
         orderBy: "createdAt_DESC"
