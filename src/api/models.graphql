@@ -12,7 +12,7 @@ type User {
   sex: String
   isFriend: Boolean!
   isFollowing: Boolean!
-  friends: [User!]!
+  friends: [FriendList!]!
   friendsCount: Int!
   following: [User!]!
   followingCount: Int!
@@ -25,6 +25,14 @@ type User {
   rooms: [Room!]!
   createdAt: String
   updatedAt: String
+}
+
+type FriendList {
+  id: ID!
+  user: User!
+  friend: User!
+  request: Boolean!
+  createdAt: String
 }
 
 type Post {

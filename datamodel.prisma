@@ -7,10 +7,10 @@ type User {
   email: String! @unique
   username: String!
   password: String!
-  firstName: String @default(value: "")
+  firstName: String @default(value: "FriendRelation")
   lastName: String
   bio: String
-  friends: [Friend!]!
+  friends: [FriendList!]! @relation(name: "FriendsOfUser")
   sex: String
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
@@ -22,9 +22,11 @@ type User {
   updatedAt: DateTime! @updatedAt
 }
 
-type Friend {
+type FriendList {
   id: ID! @id
-  participants: [User!]!
+  user: User @relation(name: "FriendsOfUser")
+  friend: User @relation(name: "Friend")
+  request: Boolean @default(value: false)
   createdAt: DateTime! @createdAt
 }
 

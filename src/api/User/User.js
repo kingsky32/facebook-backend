@@ -3,11 +3,11 @@ import { prisma } from "../../../generated/prisma-client";
 export default {
   User: {
     posts: ({ id }) => prisma.user({ id }).posts(),
-    friends: ({ id }) => prisma.user({ id }).friends(),
     likes: ({ id }) => prisma.user({ id }).likes(),
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
     postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
+    friends: ({ id }) => prisma.user({ id }).friends(),
     friendsCount: ({ id }) =>
       prisma.usersConnection({ where: { friends_some: { id } } }).aggregate().count(),
     fullName: parent => `${parent.firstName} ${parent.lastName}`,
