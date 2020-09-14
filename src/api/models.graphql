@@ -7,18 +7,22 @@ type User {
   firstName: String
   lastName: String
   fullName: String
-  isFrind: Boolean!
   isSelf: Boolean!
   bio: String
+  sex: String
   isFriend: Boolean!
+  isFollowing: Boolean!
   friends: [User!]!
   friendsCount: Int!
+  following: [User!]!
+  followingCount: Int!
+  followers: [User!]!
+  followersCount: Int!
   posts: [Post!]!
   postsCount: Int!
   likes: [Like!]!
   comments: [Comment!]!
   rooms: [Room!]!
-  loginSecret: String!
   createdAt: String
   updatedAt: String
 }

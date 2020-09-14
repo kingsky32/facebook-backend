@@ -31,6 +31,26 @@ export default {
         return false;
       }
     },
+    isFollowing: async (parent, _, { request }) => {
+      const { user } = request;
+      const { id: parentId } = parent;
+      try {
+        return prisma.$exists.user({
+          AND: [
+            {
+              id: user.id
+            },
+            {
+              following_some: {
+                id: parentId
+              }
+            }
+          ]
+        });
+      } catch (error) {
+        return false;
+      }
+    },
     isSelf: (parent, _, { request }) => {
       const { user } = request;
       const { id: parentId } = parent;
