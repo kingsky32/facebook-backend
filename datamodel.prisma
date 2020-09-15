@@ -10,7 +10,8 @@ type User {
   firstName: String @default(value: "FriendRelation")
   lastName: String
   bio: String
-  friends: [FriendList!]! @relation(name: "FriendsOfUser")
+  friends: [FriendList!]! @relation(name: "FriendsOfUser", onDelete: CASCADE)
+  requestFriends: [RequestFriend!]! @relation(name: "RequestFriendsOfUser", onDelete: CASCADE)
   sex: String
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
@@ -27,6 +28,13 @@ type FriendList {
   user: User @relation(name: "FriendsOfUser")
   friend: User @relation(name: "Friend")
   request: Boolean @default(value: false)
+  createdAt: DateTime! @createdAt
+}
+
+type RequestFriend {
+  id: ID! @id
+  user: User @relation(name: "RequestFriendsOfUser")
+  opponent: User @relation(name: "RequestFriend")
   createdAt: DateTime! @createdAt
 }
 
