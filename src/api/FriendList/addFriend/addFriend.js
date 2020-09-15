@@ -15,17 +15,49 @@ export default {
           },
           {
             friend: {
-              id: id
+              id
+            }
+          }
+        ]
+      };
+      const requestFriendFilterOptions = {
+        AND: [
+          {
+            user: {
+              id
+            }
+          },
+          {
+            opponent: {
+              id: user.id
             }
           }
         ]
       };
       try {
+        if (user.id === id) throw Error("You can't make friends with yourself.");
+        const exstingFrined = await prisma.$exists.friendList({
+          AND: [
+            {
+              user: {
+                id
+              }
+            },
+            {
+              friend: {
+                id: user.id
+              }
+            }
+          ]
+        });
+        if (exstingFrined) throw Error("Unknown error");
         const existingFriendList = await prisma.$exists.friendList(filterOptions);
         if (existingFriendList) {
           await prisma.deleteManyFriendLists(filterOptions);
+          await prisma.deleteManyRequestFriends(requestFriendFilterOptions);
+          return 0;
         } else {
-          const newFriend = await prisma.createFriendList({
+          await prisma.createFriendList({
             user: {
               connect: {
                 id: user.id
@@ -38,10 +70,22 @@ export default {
             },
             request: false
           });
+          await prisma.createRequestFriend({
+            user: {
+              connect: {
+                id
+              }
+            },
+            opponent: {
+              connect: {
+                id: user.id
+              }
+            }
+          });
         }
-        return true;
+        return 1;
       } catch (e) {
-        return false;
+        return 0;
       }
     }
   }

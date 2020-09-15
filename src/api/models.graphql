@@ -10,9 +10,10 @@ type User {
   isSelf: Boolean!
   bio: String
   sex: String
-  isFriend: Boolean!
+  isFriend: Int!
   isFollowing: Boolean!
   friends: [FriendList!]!
+  requestFriends: [RequestFriend!]!
   friendsCount: Int!
   following: [User!]!
   followingCount: Int!
@@ -32,6 +33,13 @@ type FriendList {
   user: User!
   friend: User!
   request: Boolean!
+  createdAt: String
+}
+
+type RequestFriend {
+  id: ID!
+  user: User!
+  opponent: User!
   createdAt: String
 }
 

@@ -1,3 +1,3 @@
 type Mutation {
-  addFriend(id: String!): Boolean
+  addFriend(id: String!): Int
 }

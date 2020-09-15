@@ -8,6 +8,7 @@ export default {
     rooms: ({ id }) => prisma.user({ id }).rooms(),
     postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
     friends: ({ id }) => prisma.user({ id }).friends(),
+    requestFriends: ({ id }) => prisma.user({ id }).requestFriends(),
     friendsCount: ({ id }) =>
       prisma.usersConnection({ where: { friends_some: { id } } }).aggregate().count(),
     fullName: parent => `${parent.firstName} ${parent.lastName}`,
@@ -15,20 +16,53 @@ export default {
       const { user } = request;
       const { id: parentId } = parent;
       try {
-        return prisma.$exists.user({
+        const FriendState = await prisma.$exists.user({
           AND: [
             {
               id: user.id
             },
             {
               friends_some: {
-                id: parentId
+                friend: {
+                  id: parentId
+                }
+              }
+            },
+            {
+              friends_every: {
+                request: true
               }
             }
           ]
         });
+        const requestFriendState = await prisma.$exists.user({
+          AND: [
+            {
+              id: user.id
+            },
+            {
+              friends_some: {
+                friend: {
+                  id: parentId
+                }
+              }
+            },
+            {
+              friends_every: {
+                request: false
+              }
+            }
+          ]
+        });
+        if (FriendState) {
+          return 2;
+        } else if (requestFriendState) {
+          return 1;
+        } else {
+          return 0;
+        }
       } catch (error) {
-        return false;
+        return 0;
       }
     },
     isFollowing: async (parent, _, { request }) => {
