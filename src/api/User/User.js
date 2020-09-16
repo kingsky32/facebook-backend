@@ -7,10 +7,36 @@ export default {
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
     postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
-    friends: ({ id }) => prisma.user({ id }).friends(),
+    friends: ({ id }) =>
+      prisma.user({ id }).friends({
+        where: {
+          AND: [
+            {
+              user: { id }
+            },
+            {
+              request: true
+            }
+          ]
+        }
+      }),
     requestFriends: ({ id }) => prisma.user({ id }).requestFriends(),
     friendsCount: ({ id }) =>
-      prisma.usersConnection({ where: { friends_some: { id } } }).aggregate().count(),
+      prisma
+        .friendListsConnection({
+          where: {
+            AND: [
+              {
+                user: { id }
+              },
+              {
+                request: true
+              }
+            ]
+          }
+        })
+        .aggregate()
+        .count(),
     fullName: parent => `${parent.firstName} ${parent.lastName}`,
     isFriend: async (parent, _, { request }) => {
       const { user } = request;
