@@ -11,6 +11,7 @@ type User {
   bio: String
   sex: String
   isFriend: Int!
+  peopleYouMayKnow: [User!]!
   isFollowing: Boolean!
   friends: [FriendList!]!
   requestFriends: [RequestFriend!]!

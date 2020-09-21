@@ -7,6 +7,27 @@ export default {
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
     postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
+    peopleYouMayKnow: (_, __, { request }) => {
+      const { user } = request;
+      return prisma.users({
+        where: {
+          AND: [
+            {
+              friends_none: {
+                request: true
+              }
+            },
+            {
+              NOT: [
+                {
+                  id: user.id
+                }
+              ]
+            }
+          ]
+        }
+      });
+    },
     friends: ({ id }) =>
       prisma.user({ id }).friends({
         where: {
