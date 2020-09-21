@@ -9,7 +9,7 @@ export default {
           AND: [
             {
               friends_every: {
-                request: true
+                request: false
               }
             }
           ],
