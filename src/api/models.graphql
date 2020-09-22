@@ -13,6 +13,7 @@ type User {
   isFriend: Int!
   peopleYouMayKnow: [User!]!
   isFollowing: Boolean!
+  isRequestFriend: Boolean!
   friends: [FriendList!]!
   requestFriends: [RequestFriend!]!
   friendsCount: Int!

@@ -7,6 +7,24 @@ export default {
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
     postsCount: ({ id }) => prisma.postsConnection({ where: { user: { id } } }).aggregate().count(),
+    isRequestFriend: async (parent, _, { request }) => {
+      const { user } = request;
+      const { id: parentId } = parent;
+      return await prisma.$exists.requestFriend({
+        AND: [
+          {
+            user: {
+              id: user.id
+            }
+          },
+          {
+            opponent: {
+              id: parentId
+            }
+          }
+        ]
+      });
+    },
     peopleYouMayKnow: (_, __, { request }) => {
       const { user } = request;
       return prisma.users({
