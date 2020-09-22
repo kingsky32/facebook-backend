@@ -82,40 +82,86 @@ export default {
       const { id: parentId } = parent;
       try {
         const FriendState = await prisma.$exists.user({
-          AND: [
+          OR: [
             {
-              id: user.id
-            },
-            {
-              friends_some: {
-                friend: {
+              AND: [
+                {
                   id: parentId
+                },
+                {
+                  friends_some: {
+                    friend: {
+                      id: user.id
+                    }
+                  }
+                },
+                {
+                  friends_every: {
+                    request: true
+                  }
                 }
-              }
+              ]
             },
             {
-              friends_every: {
-                request: true
-              }
+              AND: [
+                {
+                  id: user.id
+                },
+                {
+                  friends_some: {
+                    friend: {
+                      id: parentId
+                    }
+                  }
+                },
+                {
+                  friends_every: {
+                    request: true
+                  }
+                }
+              ]
             }
           ]
         });
         const requestFriendState = await prisma.$exists.user({
-          AND: [
+          OR: [
             {
-              id: user.id
-            },
-            {
-              friends_some: {
-                friend: {
+              AND: [
+                {
                   id: parentId
+                },
+                {
+                  friends_some: {
+                    friend: {
+                      id: user.id
+                    }
+                  }
+                },
+                {
+                  friends_some: {
+                    request: false
+                  }
                 }
-              }
+              ]
             },
             {
-              friends_every: {
-                request: false
-              }
+              AND: [
+                {
+                  id: user.id
+                },
+                {
+                  friends_some: {
+                    friend: {
+                      id: parentId
+                    }
+                  }
+                },
+                {
+                  friends_some: {
+                    request: false
+                  }
+                }
+              ]
             }
           ]
         });
