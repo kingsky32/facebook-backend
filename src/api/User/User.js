@@ -31,11 +31,6 @@ export default {
         where: {
           AND: [
             {
-              friends_none: {
-                request: true
-              }
-            },
-            {
               NOT: [
                 {
                   id: user.id
