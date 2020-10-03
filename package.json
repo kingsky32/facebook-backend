@@ -1,13 +1,14 @@
 {
-  "name": "facebook-backend",
+  "name": "prismabook-backend",
   "version": "1.0.0",
-  "description": "Facebook clone with Express + Prisma + React",
+  "description": "Prismabook clone with Express + Prisma + React",
   "main": "index.js",
-  "repository": "https://github.com/kingsky32/facebook-backend.git",
+  "repository": "https://github.com/kingsky32/prismabook-backend.git",
   "license": "MIT",
   "dependencies": {
     "@babel/preset-env": "^7.11.5",
     "@babel/runtime": "^7.11.2",
+    "copy": "^0.3.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql-tools": "^6.2.1",

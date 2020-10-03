@@ -1,3 +1,3 @@
-# Facebook
+# Prismabook
 
-Facebook clone with Express + Prisma
+Prismabook clone with Express + Prisma
